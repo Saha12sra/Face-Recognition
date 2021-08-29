@@ -16,4 +16,28 @@ function take_snapshot(){
     })
 } 
 
-Classifier=ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/EGrPw4KWW/model.json',modelLoaded);
+classifier=ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/EGrPw4KWW/model.json',modelLoaded);
+
+function modelLoaded(){
+
+    console.log("Model has loaded.");
+}
+
+function check(){
+    img=document.getElementById("capture_img");
+        classifier.classify(img,gotResult);
+    
+    }
+    
+    function gotResult(error, results){
+    if(error){
+        console.error(error);
+    
+    }
+    else{
+    console.log(results);
+    document.getElementById("result_person_name").innerHTML=results[0].label;
+    document.getElementById("result_person_accuracy").innerHTML=(results[0].confidence.toFixed(2)*100);
+    }
+    
+    }
